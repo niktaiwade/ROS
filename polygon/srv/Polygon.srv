@@ -1,0 +1,4 @@
+float64 side_length
+float64 side_number
+---
+bool success
