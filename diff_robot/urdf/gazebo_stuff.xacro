@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+
+<robot>
+  <gazebo reference="chassis">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+
+  <gazebo reference="right_wheel">
+    <material>Gazebo/Green</material>
+  </gazebo>
+
+  <gazebo reference="left_wheel">
+    <material>Gazebo/Green</material>
+  </gazebo>
+
+
+
+  <!--Gazebo Plugin for differential drive robot-->
+  <gazebo>
+    <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+      <alwaysOn>false</alwaysOn>
+      <legacyMode>false</legacyMode>
+      <updateRate>20</updateRate>
+      <leftJoint>chassis_left_joint</leftJoint>
+      <rightJoint>chassis_right_joint</rightJoint>
+      <wheelSeparation>0.6</wheelSeparation>
+      <wheelDiameter>0.2</wheelDiameter>
+      <torque>20</torque>
+      <commandTopic>/diff_robot/cmd_vel</commandTopic>
+      <odometryTopic>/diff_robot/odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <robotBaseFrame>chassis</robotBaseFrame>
+    </plugin>
+  </gazebo>
+
+  <!--Gazebo sensor Plugin (Laser Scanner)-->
+  <gazebo reference="laser_scanner">
+    <sensor type ="gpu_ray" name="hoyuko">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>true</visualize>
+      <update_rate>20</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>720</samples>
+            <resolution>1</resolution>
+            <min_angle>-1.5708</min_angle>
+            <max_angle>1.5708</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.30</min>
+          <max>5.0</max>
+          <resolution>0.01</resolution>
+        </range>
+      </ray>
+      <plugin name="gpu_laser" filename="libgazebo_ros_gpu_laser.so">
+        <topicName>/diff_robot/laser_scan</topicName>
+        <frameName>laser_scanner</frameName>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <gazebo reference="laser_scanner">
+    <material>Gazebo/Orange</material>
+  </gazebo>
+
+</robot>
