@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="model" default="model.xacro"/>
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find diff_robot)/urdf/$(arg model)'"/>
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="paused" default="false"/>
+    <arg name="use_sim_time" default="true"/>
+    <arg name="gui" default="true"/>
+    <arg name="headless" default="false"/>
+    <arg name="debug" default="false"/>
+  </include>
+
+  <arg name="x" value="0"/>
+  <arg name="y" value="0"/>
+  <arg name="z" value="1.0"/>
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param robot_description -model diff_robot -x $(arg x) -y $(arg y) -z $(arg z)"/>
+</launch>
